@@ -12,9 +12,11 @@ author = ''
 # for collecting each author's code contribution
 authors = ''
 authorList = []
+# additional param for git log
+additional_git_param = ''
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"",["author=","committer="])
+    opts, args = getopt.getopt(sys.argv[1:],"",["author=","committer=","gparam="])
 except getopt.GetoptError:
     print 'Wrong input!! \nUsage:\nghcount.py [--author=<comma separated author names>]'
     sys.exit(2)
@@ -24,13 +26,15 @@ for opt, arg in opts:
         sys.exit()
     elif opt in ("--committer", "--author"):
         authors = arg
+    elif opt == '--gparam':
+        additional_git_param = arg
 
 authorList = authors.split(",")
 
 # debugging for input option: authorList
 #print authorList
 print 'Collecting git log...'
-(exitstatus, outtext) = commands.getstatusoutput('git log --numstat')
+(exitstatus, outtext) = commands.getstatusoutput('git log --numstat '+additional_git_param)
 
 if exitstatus != 0:
     print 'Error! Check if you\'re in a git repository.'
