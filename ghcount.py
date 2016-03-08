@@ -29,7 +29,7 @@ authorList = authors.split(",")
 
 # debugging for input option: authorList
 #print authorList
-print 'collecting git log...'
+print 'Collecting git log...'
 (exitstatus, outtext) = commands.getstatusoutput('git log --numstat')
 
 if exitstatus != 0:
@@ -59,8 +59,11 @@ for line in lines:
         profiles[author][1] += int(segments[1])
         profiles[author][2].add(segments[2])
 
+print 'Done.'
+print ('{:12}\t{:12}\t{:12}\t{:12}\t{:40}').format('INSERTIONS', 'DELETIONS', 'FILES', 'COMMITS', 'AUTHOR')
 for (k, v) in profiles.items():
-    print ('{:<40}: insertions: {:10}, deletions: {:10}, files: {:5}, commits: {:5}').format(k, str(v[0]), str(v[1]), str(len(v[2])), str(v[3]))
+    # print ('{:40.39}:\t insertions:\t {:10},\t deletions:\t {:10},\t files:\t {:5},\t commits:\t {:5}').format(k, str(v[0]), str(v[1]), str(len(v[2])), str(v[3]))
+    print ('{:12}\t{:12}\t{:12}\t{:12}\t{:40}').format(str(v[0]), str(v[1]), str(len(v[2])), str(v[3]), k)
 
 if authors != '':
     print "\nIndividual code statistics:\n"
