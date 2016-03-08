@@ -14,6 +14,7 @@ authors = ''
 authorList = []
 # additional param for git log
 additional_git_param = ''
+git_command=''
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],"",["author=","committer=","gparam="])
@@ -33,8 +34,11 @@ authorList = authors.split(",")
 
 # debugging for input option: authorList
 #print authorList
-print 'Collecting git log...'
-(exitstatus, outtext) = commands.getstatusoutput('git log --numstat '+additional_git_param)
+git_command = 'git log --numstat ' + additional_git_param
+print 'Collecting git log ...' 
+print 'Command: ' + git_command
+#(exitstatus, outtext) = commands.getstatusoutput('git log --numstat '+additional_git_param)
+(exitstatus, outtext) = commands.getstatusoutput(git_command)
 
 if exitstatus != 0:
     print 'Error! Check if you\'re in a git repository.'
